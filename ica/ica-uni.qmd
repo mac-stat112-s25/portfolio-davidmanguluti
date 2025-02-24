@@ -3,3 +3,201 @@ title: "Univariate Viz"
 ---
 
 Use this file for practice with the **univariate viz** in-class activity.  Refer to the class website for details.
+
+#Exercise 1
+
+```{r}
+hikes <- read.csv("https://mac-stat.github.io/data/high_peaks.csv")
+head(hikes)
+```
+What features would we like a visualization of the categorical difficulty rating variable to capture?
+-It should be visualised in a sequential manner of a logical format from the lowest difficulty to the highest (i.e from 4 to 7)
+
+What about a visualization of the quantitative elevation variable?
+-It should be sequenced from highest to lowest as it is in the datasets
+
+#Exercise 2
+# Use the ggplot function
+```{r}
+ggplot(hikes, aes(x = rating))
+
+# Load the package
+library(tidyverse)
+```
+
+#Exercise 3
+How many hikes fall into each category?
+-
+Are the hikes evenly distributed among these categories, or are some more common than others?
+```{r}
+ggplot(hikes, aes(x = rating))
+
+```
+What did this do? What do you observe? This created a simple plot where the x axis was using "names" from the header row of the "hikes" dataset.
+What, in general, is the first argument of the ggplot() function? The first arguement of ggplot is the data, so to which dataset the plot must be made from. 
+What is the purpose of writing x = rating? The name of the header line
+What do you think aes stands for?!? Aesthetic
+
+#Exericse 4
+# Now ggplot has been asked to make a bar graph and it makes it, before there was no graph it was asked to make
+```{r}
+ggplot(hikes, aes(x = rating)) +
+  geom_bar()
+
+```
+#This function now changes the y axis and names it! 
+```{r}
+ggplot(hikes, aes(x=rating)) + 
+  geom_bar() +
+  labs(x="Rating", y="Number of Hikes")
+```
+#This function now adds the blue color to the plotting
+```{r}
+ggplot(hikes, aes(x=rating)) + 
+  geom_bar(fill = "blue") +
+  labs(x = "Rating", y = "Number of Hikes")
+  
+```
+#Adds both orange outline and blue fill color
+```{r}
+ggplot(hikes, aes(x = rating)) +
+  geom_bar(color = "orange", fill = "blue") +
+  labs(x = "Rating", y = "Number of Hikes")
+```
+```{r}
+ggplot(hikes, aes(x = rating))
+```
+```{r}
+# COMMENT on the change in the code and the corresponding change in the plot
+ggplot(hikes, aes(x = rating)) +
+  geom_bar()
+```
+```{r}
+# COMMENT on the change in the code and the corresponding change in the plot
+ggplot(hikes, aes(x = rating)) +
+  geom_bar() +
+  labs(x = "Rating", y = "Number of hikes")
+```
+```{r}
+# COMMENT on the change in the code and the corresponding change in the plot
+ggplot(hikes, aes(x = rating)) +
+  geom_bar(fill = "blue") +
+  labs(x = "Rating", y = "Number of hikes")
+```
+```{r}
+# COMMENT on the change in the code and the corresponding change in the plot
+ggplot(hikes, aes(x = rating)) +
+  geom_bar(color = "orange", fill = "blue") +
+  labs(x = "Rating", y = "Number of hikes")
+```
+```{r}
+# COMMENT on the change in the code and the corresponding change in the plot
+ggplot(hikes, aes(x = rating)) +
+  geom_bar(color = "orange", fill = "blue")  +
+  labs(x = "Rating", y = "Number of hikes") +
+  theme_minimal()
+```
+
+
+#Exercise 5
+```{r}
+ggplot(hikes, aes(x=elevation)) +
+  geom_bar(color = "red", fill = "orange")
+```
+
+
+
+#Exercise 6
+
+
+#Exercise 7
+
+
+
+#Exercise 8
+```{r}
+ggplot(hikes, aes(x = elevation))+
+  geom_histogram()
+```
+
+
+#Exercise 9 
+```{r}
+# COMMENT on the change in the code and the corresponding change in the plot
+ggplot(hikes, aes(x = elevation)) +
+  geom_histogram(color = "red") 
+```
+```{r}
+# COMMENT on the change in the code and the corresponding change in the plot
+ggplot(hikes, aes(x = elevation)) +
+  geom_histogram(color = "white", fill = "blue") 
+```
+```{r}
+# COMMENT on the change in the code and the corresponding change in the plot
+ggplot(hikes, aes(x = elevation)) +
+  geom_histogram(color = "white") +
+  labs(x = "Elevation (feet)", y = "Number of hikes")
+```
+```{r}
+# COMMENT on the change in the code and the corresponding change in the plot
+ggplot(hikes, aes(x = elevation)) +
+  geom_histogram(color = "red", binwidth = 500) +
+  labs(x = "Elevation (feet)", y = "Number of hikes")
+```
+```{r}
+# immediate no
+ggplot(hikes, aes(x = elevation)) +
+  geom_histogram(color = "red", binwidth = 5) +
+  labs(x = "Elevation (feet)", y = "Number of hikes")
+```
+```{r}
+# COMMENT on the change in the code and the corresponding change in the plot
+ggplot(hikes, aes(x = elevation)) +
+  geom_histogram(color = "red", fill = "pink", binwidth = 200) +
+  labs(x = "Elevation (feet)", y = "Number of hikes")
+```
+
+#Exercise 10
+
+-
+
+#Exercise 11
+```{r}
+ggplot(hikes, aes(x = elevation)) +
+  geom_density()
+```
+
+```{r}
+ggplot(hikes, aes(x = elevation)) +
+  geom_density(color="blue",fill="green")
+```
+
+#Exercise 12
+
+
+#Exercise 13
+```{r}
+ggplot(hikes, aes(x = elevation)) + 
+  geom_histogram(color = "red", fill = "white", binwidth = 200) + 
+  labs(x = "Elevation", y = "Number of Hikes")
+```
+```{r}
+# YUCK 
+ggplot(hikes, aes(x = elevation)) + geom_histogram(color = "white", binwidth = 200) + labs(x = "Elevation (feet)", y = "Number of hikes")
+```
+
+
+#Exercise 14
+```{r}
+# Data on students in this class
+survey <- read.csv("https://hash-mac.github.io/stat112site-s25/data/survey.csv")
+
+# World Cup data
+world_cup <- read.csv("https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2022/2022-11-29/worldcups.csv")
+```
+```{r}
+ggplot(world_cup,aes(x=winner))+
+  geom_bar(color="white", fill="purple")+
+  labs(x="World Cup Countries",y="Number of Wins")
+```
+

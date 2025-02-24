@@ -3,3 +3,60 @@ title: "Trivariate Viz"
 ---
 
 Use this file to generate a professional looking **trivariate** visualization.  The visualization will not perfect the first time but you are expected to improve on it throughout the semester especially after covering advanced topics such as effective viz.
+
+```{r}
+
+# Load required libraries
+library(clipr)
+library(cpp11)
+library(crayon)
+library(data.table)
+library(dbplyr)
+library(dplyr)
+library(dtplyr)
+library(fivethirtyeight)
+library(fivethirtyeightdata)
+library(ggformula)
+library(gtools)
+library(hexbin)
+library(labelled)
+library(labeling)
+library(leaflet)
+library(leaflet.providers)
+library(magrittr)
+library(lubridate)
+library(maps)
+library(mosaic)
+library(mosaicCore)
+library(viridis)
+library(tidyselect)
+library(tidyr)
+library(tidyverse)
+```
+
+#The Trends of Simpsons Episodes
+
+::: {.callout-note title="This trivariate visualisation shows the relationship between viewership and IMDB ratings as it pertains to the year the episode was released"}
+
+PLACE YOUR SUMMARY IN THIS CALLOUT BOX
+
+```{r}
+simpsons_episodes <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/main/data/2025/2025-02-04/simpsons_episodes.csv')
+```
+
+```{r}
+#| fig-alt: "A graph that explores the relationship between viewership, imbd rating and the Year of release of Simpsons episodes using a scatterplot and a smooth line"
+
+ggplot(simpsons_episodes,aes(x=us_viewers_in_millions, y=imdb_rating, color = original_air_year))+
+  geom_point(size = 3)+
+  scale_color_gradient(low="orange", high = "red")+
+  geom_smooth()+
+  theme_minimal()+
+  labs(title = "Simpsons Episodes Views & Ratings Data", subtitle = "By David Manguluti February 2025, Tidy Tuesday", x="US Viewership in Millions per Episode", y="IMBD Rating out of 10", color = "Year of Release")+
+  theme(plot.title = element_text(face = "bold", size = 16, hjust = 0.5),strip.text = element_text(size = 12, face = "bold"), 
+    plot.subtitle = element_text(face = "bold", size = 10, hjust = 0.5)) 
+  
+```
+
+
+

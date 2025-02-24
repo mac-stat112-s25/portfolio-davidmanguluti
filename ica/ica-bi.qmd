@@ -3,3 +3,337 @@ title: "Bivariate Viz"
 ---
 
 Use this file for practice with the **bivariate viz** in-class activity.  Refer to the class website for details.
+
+```{r}
+# Import data
+survey <- read.csv("https://hash-mac.github.io/stat112site-s25/data/survey.csv")
+
+
+library(ggplot2) # Load ggplot2 package
+
+survey <- read.csv("https://hash-mac.github.io/stat112site-s25/data/survey.csv")
+
+ggplot(data = survey, aes(x = hangout)) + 
+  geom_bar(color = "orange", fill = "blue") + 
+  labs(x = "Hangout", y = "# of Ppl")
+```
+```{r}
+data.frame(temp_3pm = c(24, 26, 20, 15, 15, 15), temp_9am = c(14, 18, 15, 13, 11, 11))
+```
+```{r}
+weather <- data.frame(temp_3pm = c(24, 26, 20, 15, 15, 0, 40, 60, 57, 44, 51, 75),
+                      location = rep(c("A", "B"), each = 6))
+
+ggplot(weather, aes(x=temp_3pm))+
+  geom_density()
+```
+```{r}
+weather <- data.frame(rain_today = c("no", "no", "no", "no", "yes", "no", "yes", "no", "yes", "yes", "no", "yes"),
+                        location = c(rep("A", 7), rep("B", 5)))
+    weather
+    ggplot(weather, aes(x = location)) +
+      geom_bar()
+```
+
+
+#Exercise 0
+```{r}
+# Load data
+elections <- read.csv("https://mac-stat.github.io/data/election_2020_county.csv")
+
+# Check it out
+head(elections)
+```
+How many, or roughly what percent, of the 3000+ counties did the Republican candidate win in 2020?
+-40%
+```{r}
+ggplot(elections,aes(x=winner_20))+
+  geom_bar()
+
+ggplot(elections,aes(x=repub_pct_20))+
+  geom_bar()
+```
+
+#Exercise 1
+```{r}
+ggplot(elections,aes(repub_pct_16,repub_pct_20))+
+  geom_point()
+```
+
+
+#Exericise 2
+# Set up the plotting frame
+# How does this differ than the frame for our histogram of repub_pct_20 alone?
+```{r}
+ggplot(elections, aes(y = repub_pct_20, x = repub_pct_16))
+
+ggplot(elections, aes(y = repub_pct_20, x = repub_pct_16)) +
+  geom_point(color="red", fill="blue")
+
+# Add a layer that represents each county by the state it's in
+# Take note of the geom and the info it needs to run!
+ggplot(elections, aes(y = repub_pct_20, x = repub_pct_16)) +
+  geom_text(aes(label = state_name))
+
+```
+# Add a layer of points for each county
+# Take note of the geom!
+```{r}
+ggplot(elections, aes(y = repub_pct_20, x = repub_pct_16)) +
+  geom_point()
+```
+# Change the shape of the points
+# What happens if you change the shape to another number?
+```{r}
+ggplot(elections, aes(y = repub_pct_20, x = repub_pct_16)) +
+  geom_point(shape = 3)
+```
+# YOU TRY: Modify the code to make the points "orange"
+# NOTE: Try to anticipate if "color" or "fill" will be useful here. Then try both.
+```{r}
+ggplot(elections, aes(y = repub_pct_20, x = repub_pct_16)) +
+  geom_point()
+```
+# Add a layer that represents each county by the state it's in
+# Take note of the geom and the info it needs to run!
+```{r}
+ggplot(elections, aes(y = repub_pct_20, x = repub_pct_16)) +
+  geom_text(aes(label = state_abbr))
+```
+
+#Exercise 3
+
+Summarize the relationship between the Republican support in 2020 and 2016. Be sure to comment on:
+
+the strength of the relationship (weak/moderate/strong): Strong relationship
+the direction of the relationship (positive/negative): Positive relationship
+outliers (in what state do counties deviate from the national trend? Any ideas why this might be the case?): Texas is the state where counties deviate from the national trend the most, this could be mostly due to the democratic majority in huge cities like Houston and Austin.  
+
+
+
+#Exercise 4
+
+```{r}
+ggplot(elections, aes(y = repub_pct_20, x = repub_pct_16)) +
+  geom_point() +
+  geom_smooth()
+```
+```{r}
+ggplot(elections, aes(y = repub_pct_20, x = repub_pct_16)) +
+  geom_point() +
+  geom_smooth(method = "lm")
+```
+
+#Exercise 5
+# Scatterplot of repub_pct_20 vs median_rent
+```{r}
+ggplot(elections, aes(y=repub_pct_20, x=median_rent))+
+  geom_point(color="red")+
+  geom_smooth(method = lm)+
+  labs(x="Median Rent in County",y="Percent Republican Voting")
+```
+```{r}
+ggplot(elections, aes(y=repub_pct_20, x=median_age))+
+  geom_point(color="red")+
+  geom_smooth(method = lm)+
+  labs(x="Median Age in County",y="Percent Republican Voting")
+```
+
+
+
+# Scatterplot of repub_pct_20 vs median_age
+
+#Exercise 6
+```{r}
+ggplot(elections, aes(y = repub_pct_20, x = historical)) +
+  geom_point()
+```
+
+
+#Exercise 7
+```{r}
+# Side-by-side violin plots
+ggplot(elections, aes(y = repub_pct_20, x = historical)) +
+  geom_violin()
+```
+```{r}
+# Side-by-side boxplots (defined below)
+ggplot(elections, aes(y = repub_pct_20, x = historical)) +
+  geom_boxplot()
+```
+
+
+#Exercise 8
+```{r}
+ggplot(elections, aes(x = repub_pct_20, fill = historical)) +
+  geom_density()
+```
+
+
+#Exercise 9 
+```{r}
+# No labels and the color key is wrong compared to the historical categories
+ggplot(elections, aes(x = repub_pct_20, fill = historical)) +
+  geom_density()+
+  scale_fill_manual(values = c("pink", "purple", "red"))
+```
+```{r}
+# +scale_fill_manual (value) sets the colors that the historical categorical variables should equate to which allows synergy between the values and the key
+ggplot(elections, aes(x = repub_pct_20, fill = historical)) +
+  geom_density() +
+  scale_fill_manual(values = c("blue", "purple", "red"))
+```
+```{r}
+# What does alpha = 0.5 do? Alpha works to change the opacity of the graphings
+ggplot(elections, aes(x = repub_pct_20, fill = historical)) +
+  geom_density(alpha = 0.2) +
+  scale_fill_manual(values = c("blue", "purple", "red"))
+```
+```{r}
+#THIS IS A BEAUTIFUL PLOT
+#What does facet_wrap do?! It seperates the plots
+ggplot(elections, aes(x = repub_pct_20, fill = historical)) +
+  geom_density(alpha = 0.6) +
+  scale_fill_manual(values = c("blue", "purple", "red")) +
+  facet_wrap(~ historical)+
+  theme(legend.position = "top",
+    plot.title = element_text(face = "bold", size = 16, hjust = 0.5),strip.text = element_text(size = 12, face = "bold"), 
+    plot.subtitle = element_text(face = "bold", size = 10, hjust = 0.5)) + 
+  labs(title = "Distribution of Republican Voter % (2020)",
+    subtitle = "Density plots segmented by historical voting patterns",
+    x = "% of Republican Voters",
+    y = "Density",
+    fill = "Historical Voting Pattern")
+```
+```{r}
+# Let's try a similar grouping strategy with a histogram instead of density plot.
+# Why is this terrible?
+ggplot(elections, aes(x = repub_pct_20, fill = historical)) +
+  geom_histogram(color = "white", binwidth = 25) +
+  scale_fill_manual(values = c("blue", "purple", "red"))+
+  facet_wrap(~ historical)
+```
+```{r}
+library(ggplot2)
+library(RColorBrewer)
+
+ggplot(elections, aes(x = repub_pct_20, fill = historical)) +
+  geom_density(alpha = 0.5, color = "black") +
+  scale_fill_brewer(palette = "Set2") +
+  facet_wrap(~ historical, scales = "free_y") +
+  labs(
+    title = "Distribution of Republican Voter Percentage (2020)",
+    subtitle = "Density plots segmented by historical voting patterns",
+    x = "% of Republican Voters",
+    y = "Density",
+    fill = "Historical Voting Pattern"
+  ) +
+  theme_minimal(base_size = 14) + 
+  theme(
+    legend.position = "top",
+    plot.title = element_text(face = "bold", size = 16),
+    plot.subtitle = element_text(size = 12, color = "gray40"),
+    axis.text = element_text(size = 12),
+    strip.text = element_text(face = "bold")
+  )
+```
+
+
+#Exercise 10
+
+
+#Exercise 11
+```{r}
+# Plot 1: adjust this to recreate the top plot
+ggplot(elections, aes(x = historical, fill=winner_20)) +
+  geom_bar()+
+  scale_fill_manual(values=c("blue","red"))
+```
+
+
+#Exercise 12
+```{r}
+# A stacked bar plot
+# How are the "historical" and "winner_20" variables mapped to the plot, i.e. what roles do they play?
+ggplot(elections, aes(x = historical, fill = winner_20)) +
+  geom_bar(position="dodge")
+```
+
+```{r}
+# A faceted bar plot
+ggplot(elections, aes(x = winner_20)) +
+  geom_bar() +
+  facet_wrap(~ historical)
+```
+```{r}
+# A side-by-side bar plot
+# Note the new argument to geom_bar
+ggplot(elections, aes(x = historical, fill = winner_20)) +
+  geom_bar(position = "dodge")
+```
+```{r}
+# A proportional bar plot
+# Note the new argument to geom_bar
+ggplot(elections, aes(x = historical, fill = winner_20)) +
+  geom_bar(position = "fill")
+```
+
+#Exercise 13+
+
+```{r}
+ggplot(elections, aes(x = repub_pct_20, fill = state_abbr)) + 
+  geom_density(alpha = 0.5)
+```
+```{r}
+# Install ggridges package
+library(ggridges)
+
+# Make our first joy plot
+# THINK: What DON'T you like about this?
+ggplot(elections, aes(x = repub_pct_20, y = state_abbr)) + 
+  geom_density_ridges()
+```
+```{r}
+# Let's put the states in order by Republican support, not alphabet
+ggplot(elections, aes(x = repub_pct_20, y = fct_reorder(state_abbr, repub_pct_20))) + 
+  geom_density_ridges(alpha = 0.5)
+```
+```{r}
+library(ggplot2)
+library(ggridges)
+library(forcats)  # For fct_reorder
+
+ggplot(elections, aes(x = repub_pct_20, 
+                      y = fct_reorder(state_abbr, repub_pct_20), 
+                      fill = stat(x))) + 
+  geom_density_ridges(alpha = 0.7, scale = 1, rel_min_height = 0.01) + 
+  scale_fill_viridis_c(option = "magma", direction = -1) +  # Smooth color gradient
+  labs(
+    title = "Distribution of Republican Vote Percentage by State (2020)",
+    subtitle = "Ordered by increasing Republican support",
+    x = "% of Republican Voters",
+    y = "State Abbreviation",
+    fill = "Vote %"
+  ) +
+  theme_minimal(base_size = 14) +
+  theme(
+    plot.title = element_text(face = "bold", size = 16),
+    plot.subtitle = element_text(size = 12, color = "gray40"),
+    axis.text.y = element_text(size = 10),
+    legend.position = "right"
+  )
+```
+```{r}
+library(ggplot2)
+library(ggridges)
+library(forcats)
+
+ggplot(elections, aes(x = repub_pct_20, y = fct_reorder(state_abbr, repub_pct_20),fill = historical)) + 
+  geom_density_ridges(alpha = 0.7, scale = 1) + 
+  scale_fill_manual(values = c("blue", "purple", "red")) +
+  labs(title = "Distribution of Republican Vote Percentage by State (2020)",subtitle = "Ordered by increasing Republican support", x = "% of Republican Voters", y = "State Abbreviation", fill = "Historical Voting Pattern") +
+  theme_minimal(base_size = 14) +
+  theme(plot.title = element_text(face = "bold", size = 16), plot.subtitle = element_text(size = 12, color = "gray40"))
+```
+
+

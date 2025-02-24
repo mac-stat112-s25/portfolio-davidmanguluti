@@ -1,0 +1,54 @@
+---
+title: "ica-verbs"
+editor: visual
+---
+
+```{r}
+# Load tidyverse & data
+library(tidyverse)
+elections <- read.csv("https://mac-stat.github.io/data/election_2020_county.csv")
+```
+```{r}
+# What's the first argument? The second?
+select(elections, c(state_name, county_name, dem_pct_20, dem_pct_16))
+```
+```{r}
+elections |> 
+  select(state_name, county_name, dem_pct_20, dem_pct_16)
+```
+
+```{r}
+# Without a pipe
+filter(elections, state_name == "Minnesota")
+```
+```{r}
+# Without pipes
+filter(select(elections, c(state_name, county_name, dem_pct_20, dem_pct_16)), state_name == "Minnesota")
+```
+```{r}
+# We can even do this with UN-tidyverse code in "base" R
+elections[elections$state_name == "Minnesota", c(1, 4, 8, 12)]
+```
+
+```{r}
+elections |> 
+  filter(state_name == "Minnesota")|> select(state_name, county_name, dem_pct_20, dem_pct_16)  
+```
+
+```{r}
+# Store the results
+mn <- elections |> 
+  select(state_name, county_name, dem_pct_20, dem_pct_16) |> 
+  filter(state_name == "Minnesota")
+
+# Always check it out to confirm it's what you want it to be!
+head(mn)
+```
+```{r}
+# Define elections_small
+elections_small <- elections |> select(state_name, county_name, total_votes_20, repub_pct_20, dem_pct_20, total_votes_16, dem_pct_16)
+
+# Check out the first 6 rows to confirm your code did what you think it did!
+head(elections_small)
+```
+
