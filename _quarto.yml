@@ -37,7 +37,7 @@ book:
       - ica/ica-bi.qmd
       - ica/ica-multi.qmd
       - ica/ica-spatial.qmd
-      -ica/ica-verbs.qmd
+      - ica/ica-verbs.qmd
 
 format:
   html:

@@ -35,6 +35,7 @@ library(tidyselect)
 library(tidyr)
 library(tidyverse)
 library(ggrepel)
+library()
 ```
 
 ```{r}
@@ -67,7 +68,7 @@ pal <- colorFactor(palette = c("red", "blue"), domain = fave_yale$favorite)
 #|fig-cap: "Map that showcases in blue and red the best spots on Yale University campus"
  #| fig-alt: "A map that plots the author's Top spots across Yale Univeristy"
 
-title <- tags$d
+title <- tags$d("My Map by David")
 leaflet(data = fave_yale)|>
   addProviderTiles(providers$OpenStreetMap)|>
   addCircles(weight = 10, opacity = 0.8, color = ~pal(favorite), label = ~place)|>
