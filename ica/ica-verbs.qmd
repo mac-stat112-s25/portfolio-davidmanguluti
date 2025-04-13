@@ -51,4 +51,328 @@ elections_small <- elections |> select(state_name, county_name, total_votes_20, 
 # Check out the first 6 rows to confirm your code did what you think it did!
 head(elections_small)
 ```
+Exercise 1: select Practice
+Use select() to create a simplified dataset that we’ll use throughout the exercises below.
+
+Store this dataset as elections_small.
+Only keep the following variables: state_name, county_name, total_votes_20, repub_pct_20, dem_pct_20, total_votes_16, dem_pct_16
+# Define elections_small
+ 
+```{r}
+elections_small <- elections |> select(state_name, county_name,total_votes_20, repub_pct_20, dem_pct_20, total_votes_16, dem_pct_16)
+head(elections_small)
+```
+
+# Check out the first 6 rows to confirm your code did what you think it did!
+
+Exercise 2: filter Demo
+Whereas select() selects certain variables or columns, filter() keeps certain units of observation or rows relative to their outcome on certain variables. To this end, we must:
+
+Identify the variable(s) that are relevant to the filter.
+
+Use a “logical comparison operator” to define which values of the variable to keep:
+
+symbol	meaning
+==	equal to
+!=	not equal to
+>	greater than
+>=	greater than or equal to
+<	less than
+<=	less than or equal to
+%in% c(???, ???)	a list of multiple values
+Use quotes "" when specifying outcomes of interest for a categorical variable.
+
+Commenting/Uncommenting Code
+To comment/uncomment several lines of code at once, highlight them then click ctrl/cmd+shift+c.
+```{r}
+ elections_small |> 
+   filter(state_name %in% c("Hawaii", "Delaware"))
+
+
+```
+
+# Keep only data on counties in Hawaii
+
+
+# What does this do?
+# elections_small |> 
+#   filter(state_name %in% c("Hawaii", "Delaware"))
+
+# Keep only data on counties where the Republican got MORE THAN 93.97% of the vote in 2020
+# THINK: What variable is relevant here?
+
+```{r}
+ elections_small |> 
+   filter(repub_pct_20 > "93.97")
+
+```
+
+
+# Keep only data on counties where the Republican got AT LEAST 93.97% of the vote in 2020
+# This should have 1 more row (observation) than your answer above
+```{r}
+ elections_small |> 
+   filter(repub_pct_20 >= "93.97")
+
+```
+We can also filter with respect to 2 rules! Here, think what variables are relevant.
+
+# Keep only data on counties in Texas where the Democrat got more than 65% of the vote in 2020
+# Do this 2 ways.
+# Method 1: 2 filters with 1 condition each
+#elections_small |> 
+#  filter(___) |> 
+#  filter(___)
+
+```{r}
+ elections_small |> 
+   filter(dem_pct_20 > "65", , state_name == "Texas") 
+
+```
+
+# Method 2: 1 filter with 2 conditions
+#elections_small |> 
+#  filter(___, ___)
+
+Exercise 3: arrange Demo
+arrange() arranges or sorts the rows in a dataset according to a given column or variable, in ascending or descending order:
+
+arrange(variable), arrange(desc(variable))
+
+# Arrange the counties in elections_small from lowest to highest percentage of 2020 Republican support
+# Print out just the first 6 rows
+# elections_small |> 
+#   arrange(___) |> 
+#   head()
+
+```{r}
+elections_small |> 
+  arrange(repub_pct_20) |> 
+  head(6)
+```
+
+
+# Arrange the counties in elections_small from highest to lowest percentage of 2020 Republican support
+# Print out just the first 6 rows
+
+Exercise 4: mutate Demo
+mutate() can either transform / mutate an existing variable (column), or define a new variable based on existing ones.
+
+Part a
+# What did this code do?
+# 
+
+```{r}
+elections_small |> 
+   mutate(repub_win_20 = repub_pct_20 > dem_pct_20) |> 
+   head()
+
+```
+
+
+# What did this code do?
+# elections_small |> 
+#   mutate(repub_votes_20 = round(total_votes_20 * repub_pct_20/100)) |> 
+#   head()
+
+# What did this code do?
+# elections_small |> 
+#   mutate(repub_win_20 = repub_pct_20 > dem_pct_20) |> 
+#   head()
+
+Part b
+# You try
+# Define a variable that calculates the change in Dem support in 2020 vs 2016
+#elections_small |> 
+#  mutate(_____) |> 
+#  head()
+
+```{r}
+elections_small |> 
+  mutate(demsupport = dem_pct_20 - dem_pct_16) |>
+  head()
+```
+
+
+# You try
+# Define a variable that determines whether the Dem support was higher in 2020 than in 2016 (TRUE/FALSE)
+#elections_small |> 
+#  mutate(_____) |> 
+#  head()
+
+Exercise 5: Pipe Series
+Let’s now combine these verbs into a pipe series!
+
+Part a
+Think then Run
+BEFORE running the below chunk, what do you think it will produce?
+# elections_small |> 
+#   filter(state_name == "Wisconsin",
+#          repub_pct_20 < dem_pct_20) |> 
+#   arrange(desc(total_votes_20)) |> 
+#   head()
+```{r}
+elections_small |> 
+  arrange(desc(total_votes_20)) |> 
+  filter(state_name == "Wisconsin",
+          repub_pct_20 < dem_pct_20)
+
+```
+
+Part b
+Think then Run
+BEFORE trying, what do you think will happen if you change the order of filter and arrange:
+
+the results will be the same
+we’ll get an error
+we won’t get an error, but the results will be different
+# Now try it. Change the order of filter and arrange below.
+# elections_small |> 
+#   filter(state_name == "Wisconsin",
+#          repub_pct_20 < dem_pct_20) |> 
+#   arrange(desc(total_votes_20)) |> 
+#   head()
+
+Part c
+So the order of filter() and arrange() did not matter – rerranging them produces the same results. BUT what is one advantage of filtering before arranging?
+
+Part d
+Think then Run
+BEFORE running the below chunk, what do you think it will produce?
+# elections_small |> 
+#   filter(state_name == "Delaware") |> 
+#   mutate(repub_win_20 = repub_pct_20 > dem_pct_20) |> 
+#   select(county_name, repub_pct_20, dem_pct_20, repub_win_20)
+```{r}
+ elections_small |> 
+   filter(state_name == "Delaware") |> 
+  mutate(repub_win_20 = repub_pct_20 > dem_pct_20) |> 
+  select(county_name, repub_pct_20, dem_pct_20, repub_win_20)
+```
+
+Part e
+Think then Run
+BEFORE trying, what do you think will happen if you change the order of mutate and select:
+
+the results will be the same
+we’ll get an error
+we won’t get an error, but the results will be different
+# Now try it. Change the order of mutate and select below.
+# elections_small |> 
+#   filter(state_name == "Delaware") |> 
+#   mutate(repub_win_20 = repub_pct_20 > dem_pct_20) |> 
+#   select(county_name, repub_pct_20, dem_pct_20, repub_win_20)
+
+Exercise 6: DIY Pipe Series
+We’ve now learned 4 of the 6 wrangling verbs: select, filter, mutate, arrange. Let’s practice combining these into pipe series. Here are some hot tips:
+
+Before writing any code, translate the prompt: how many distinct wrangling steps are needed and what verb do we need in each step?
+Add each verb one at a time – don’t try writing a whole chunk at once.
+Part a
+Show just the counties in Minnesota and their Democratic 2020 vote percentage, from highest to lowest. Your answer should have just 2 columns.
+
+Part b
+Create a new dataset named mn_wi that sorts the counties in Minnesota and Wisconsin from lowest to highest in terms of the change in Democratic vote percentage in 2020 vs 2016. This dataset should include the following variables (and only these variables): state_name, county_name, dem_pct_20, dem_pct_16, and a variable measuring the change in Democratic vote percentage in 2020 vs 2016.
+
+# Define the dataset
+# Only store the results once you're confident that they're correct
+
+
+# Check out the first 6 rows to confirm your results
+
+Part c
+Construct and discuss a plot of the county-level change in Democratic vote percent in 2020 vs 2016, and how this differs between Minnesota and Wisconsin.
+
+Exercise 7: summarize Demo
+6 verbs: select, filter, arrange, mutate, summarize, group_by
+
+Let’s talk about the last 2 verbs. summarize() (or equivalently summarise()) takes an entire data frame as input and outputs a single row with one or more summary statistics. For each chunk below, indicate what the code does.
+
+# What does this do?
+# elections_small |> 
+#   summarize(median(repub_pct_20))
+
+# What does this do?
+# elections_small |> 
+#   summarize(median_repub = median(repub_pct_20))
+
+# What does this do?
+# elections_small |> 
+#   summarize(median_repub = median(repub_pct_20), total_votes = sum(total_votes_20))
+
+Exercise 8: summarize + group_by demo
+Finally, group_by() groups the units of observation or rows of a data frame by a specified set of variables. Alone, this function doesn’t change the appearance of our dataset or seem to do anything at all:
+
+# elections_small |> 
+#   group_by(state_name)
+
+Though it does change the underlying structure of the dataset:
+
+# Check out the structure before and after group_by
+# elections_small |> 
+#   class()
+# 
+# elections_small |> 
+#   group_by(state_name) |> 
+#   class()
+
+Where it really shines is in partnership with summarize().
+
+# What does this do?
+# (What if we didn't use group_by?)
+# elections_small |> 
+#   group_by(state_name) |> 
+#   summarize(median_repub = median(repub_pct_20), total_votes = sum(total_votes_20)) 
+
+Reflect
+Notice that group_by() with summarize() produces new data frame or tibble! But the units of observation are now states instead of counties within states.
+Exercise 9: DIY
+Let’s practice (some of) our 6 verbs: select, filter, arrange, mutate, summarize, group_by Remember:
+
+Before writing any code, translate the given prompts: how many distinct wrangling steps are needed and what verb do we need in each step?
+Add each verb one at a time.
+Part a
+NOTE: Part a is a challenge exercise. If you get really stuck, move on to Part b which is the same overall question, but with hints.
+
+# Sort the *states* from the most to least total votes cast in 2020
+
+# In 2020, what were the total number of votes for the Democratic candidate and the total number of votes for the Republican candidate in each *state*?
+
+# What states did the Democratic candidate win in 2020?
+
+Part b
+# Sort the states from the most to least total votes cast in 2020
+# HINT: Calculate the total number of votes in each state, then sort
+
+# In 2020, what were the total number of votes for the Democratic candidate and the total number of votes for the Republican candidate in each state?
+# HINT: First calculate the number of Dem and Repub votes in each *county*
+# Then group and summarize these by state
+
+# What states did the Democratic candidate win in 2020?
+# HINT: Start with the results from the previous chunk, and then keep only some rows
+
+Exercise 10: Practice on New Data
+Recall the World Cup football/soccer data from TidyTuesday:
+
+world_cup <- read.csv("https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2022/2022-11-29/worldcups.csv")
+
+You can find a codebook here. Use (some of) our 6 verbs (select, filter, arrange, mutate, summarize, group_by) and data viz to address the following prompts.
+
+# In what years did Brazil win the World Cup?
+
+# What were the 6 World Cups with the highest attendance?
+
+# Construct a univariate plot of goals_scored (no wrangling necessary)
+# This provides a visual summary of how the number of goals_scored varies from World Cup to World Cup
+
+# Let's follow up the plot with some more precise numerical summaries
+# Calculate the min, median, and max number of goals_scored across all World Cups
+# NOTE: Visually compare these numerical summaries to what you observed in the plot
+
+# Construct a bivariate plot of how the number of goals_scored in the World Cup has changed over the years
+# No wrangling necessary
+
+# Our above summaries might be a bit misleading.
+# The number of games played at the World Cup varies.
+# Construct a bivariate plot of how the typical number of goals per game has changed over the years
 

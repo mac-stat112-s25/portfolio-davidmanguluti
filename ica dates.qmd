@@ -3,3 +3,137 @@ title: "ica dates"
 format: html
 ---
 
+```{r}
+library(tidyverse)
+penguins <- read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2020/2020-07-28/penguins.csv')
+
+# Check it out
+head(penguins)
+```
+```{r}
+# Get data on only Adelie penguins that weigh more than 4700g
+penguins |>
+  filter(species == "Adelie",body_mass_g > 4700)
+```
+
+```{r}
+# Get data on penguin body mass only
+
+# Show just the first 6 rows
+penguins |>
+  select(body_mass_g)|>
+  head()|>
+  filter(complete.cases(body_mass_g))
+```
+
+```{r}
+# Sort the penguins from smallest to largest body mass
+# Show just the first 6 rows
+penguins |>
+  arrange(body_mass_g)|>
+  head()
+
+```
+```{r}
+# Calculate the average body mass across all penguins
+# Note: na.rm = TRUE removes the NAs from the calculation
+penguins|>
+  summarise(mean = mean(body_mass_g,na.rm = TRUE))
+
+
+# Calculate the average body mass by species
+penguins|>
+  group_by(species)|>
+  summarise(mean = mean(body_mass_g,na.rm = TRUE))
+
+
+# Create a new column that records body mass in kilograms, not grams
+# NOTE: there are 1000 g in 1 kg
+# Show just the first 6 rows
+penguins|>
+  mutate(body_mass_kg = body_mass_g/1000) |>
+  head()|>
+  filter(!is.na(bill_depth_mm))
+
+```
+
+
+```{r}
+ggplot(penguins, aes(x = species))
+```
+
+
+```{r}
+head(penguins)
+# NOTE the use of is.na()
+penguins |> 
+  summarize(sum(is.na(body_mass_g)))
+```
+
+```{r}
+# First: recall the variable names
+names(penguins)
+
+nrow(penguins)
+```
+
+```{r}
+# Change this code to sort the penguins by species, and then island name
+# NOTE: The first row should be an Adelie penguin living on Biscoe island
+penguins |> 
+  arrange(species)
+```
+```{r}
+# NOTE the use of is.na()
+penguins |> 
+  summarize(sum(is.na(body_mass_g)))
+
+# NOTE the use of is.na()
+penguins_w_body_mass <- penguins |> 
+  filter(!is.na(body_mass_g))
+
+# Compare the number of penguins in this vs the original data
+nrow(penguins_w_body_mass)
+```
+```{r}
+nrow(penguins_w_body_mass)
+```
+```{r}
+# First: recall the variable names
+names(penguins)
+```
+
+```{r}
+penguins |> 
+  select(-year,-island)
+```
+```{r}
+penguins |> 
+  arrange(species, island) |> 
+  head()
+
+penguins |> 
+  count(species, sex)
+ 
+```
+Exercise 4
+```{r}
+today <- as.Date(today())
+```
+```{r}
+class(today)
+year(today)
+month(today, label = TRUE)
+```
+
+```{r}
+mday(today)
+yday(today)
+wday(today, label = TRUE)
+```
+```{r}
+# today is on or after Feb 14, 2024
+today < ymd("2024-02-14")
+```
+
+

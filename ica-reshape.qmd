@@ -1,0 +1,18 @@
+---
+title: "ica-reshape"
+editor: visual
+---
+```{r}
+library(tidyverse)
+penguins2 <- read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2020/2020-07-28/penguins.csv')
+```
+```{r}
+# Using count()
+penguins |> count(sex)
+
+# Using group_by() and summarize()
+penguins |> 
+  group_by(sex)
+
+```
+

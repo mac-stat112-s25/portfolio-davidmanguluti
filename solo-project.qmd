@@ -1,0 +1,17 @@
+---
+title: "solo-project"
+editor: visual
+---
+```{r}
+library(tidyverse)
+library(sf)
+library(tigris)
+library(tmap)
+library(janitor)
+```
+```{r}
+# Replace with your actual file path
+tax_data <- read_csv("NYS_Total_Income_And_Tax_Liability.csv") %>% 
+  clean_names()
+```
+
