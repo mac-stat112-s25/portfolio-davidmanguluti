@@ -8,7 +8,9 @@ Use this file for practice with the **bivariate viz** in-class activity.  Refer 
 # Import data
 survey <- read.csv("https://hash-mac.github.io/stat112site-s25/data/survey.csv")
 
-
+library(ggplot2)
+library(ggridges)
+library(forcats)
 library(ggplot2) # Load ggplot2 package
 
 survey <- read.csv("https://hash-mac.github.io/stat112site-s25/data/survey.csv")
@@ -287,42 +289,22 @@ ggplot(elections, aes(x = repub_pct_20, fill = state_abbr)) +
 ```{r}
 # Install ggridges package
 library(ggridges)
-
-# Make our first joy plot
-# THINK: What DON'T you like about this?
 ggplot(elections, aes(x = repub_pct_20, y = state_abbr)) + 
   geom_density_ridges()
 ```
 ```{r}
-# Let's put the states in order by Republican support, not alphabet
-ggplot(elections, aes(x = repub_pct_20, y = fct_reorder(state_abbr, repub_pct_20))) + 
-  geom_density_ridges(alpha = 0.5)
-```
-```{r}
-library(ggplot2)
 library(ggridges)
-library(forcats)  # For fct_reorder
+library(forcats)
+library(ggplot2)
 
-ggplot(elections, aes(x = repub_pct_20, 
-                      y = fct_reorder(state_abbr, repub_pct_20), 
-                      fill = stat(x))) + 
-  geom_density_ridges(alpha = 0.7, scale = 1, rel_min_height = 0.01) + 
-  scale_fill_viridis_c(option = "magma", direction = -1) +  # Smooth color gradient
-  labs(
-    title = "Distribution of Republican Vote Percentage by State (2020)",
-    subtitle = "Ordered by increasing Republican support",
-    x = "% of Republican Voters",
-    y = "State Abbreviation",
-    fill = "Vote %"
-  ) +
-  theme_minimal(base_size = 14) +
-  theme(
-    plot.title = element_text(face = "bold", size = 16),
-    plot.subtitle = element_text(size = 12, color = "gray40"),
-    axis.text.y = element_text(size = 10),
-    legend.position = "right"
-  )
+ggplot(elections, aes(
+  x = repub_pct_20,
+  y = forcats::fct_reorder(state_abbr, repub_pct_20)
+)) + 
+  geom_density_ridges(alpha = 0.5)
+
 ```
+
 ```{r}
 library(ggplot2)
 library(ggridges)

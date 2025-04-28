@@ -13,7 +13,7 @@ book:
   
   
   sidebar:
-    title: "David Manguluti"
+    title: "David's World"
     collapse-level: 2
     style: "docked"
     pinned: true
@@ -23,7 +23,7 @@ book:
   chapters:
     - index.qmd
 
-    - part: "Best Work"
+    - part: "Portfolio Best Work"
       chapters: 
       - bw/bw-uni.qmd
       - bw/bw-bi.qmd
@@ -60,6 +60,9 @@ format:
 execute:
   cache: false
   freeze: auto
+  echo: false
+  warning: false
+  error: false
 
 editor: 
   markdown:

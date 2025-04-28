@@ -8,10 +8,88 @@ library(sf)
 library(tigris)
 library(tmap)
 library(janitor)
+library(readr)
+library(dplyr)
+library(tigris)
+library(ggplot2)
+library(stringr)
 ```
 ```{r}
-# Replace with your actual file path
-tax_data <- read_csv("NYS_Total_Income_And_Tax_Liability.csv") %>% 
+tax_data <- read_csv("total-income-and-tax-liability-by-place-of-residence-beginning-tax-year-1999.csv") |>
   clean_names()
+
+glimpse(tax_data)
+```
+```{r}
+tax_map <- tax_data %>%
+  filter(tax_year == 2014) %>%
+  select(county, tax_liability_of_all_returns_in_thousands)
+
+# Just checking
+head(tax_map)
+```
+```{r}
+ny_counties <- counties(state = "NY", cb = TRUE, year = 2019)
+plot(ny_counties$geometry)
+viz_tax <- tax_data |>
+  filter(tax_year == 2014) |>
+  select(county, tax_liability_of_all_returns_in_thousands) |>
+  mutate(county = tolower(county))
+```
+
+```{r}
+anti_join(viz_tax, ny_counties, by = c("county" = "NAME")) %>%
+  distinct(county)
+```
+
+
+
+
+```{r}
+
+
+viz_tax1 <- viz_tax %>%
+  mutate(county = str_to_lower(county)) %>%
+  filter(!str_detect(county, "total|,|outside|unspecified|unknown|other")) %>%
+  mutate(
+    county = str_replace_all(county, " county", ""),
+    county = str_replace_all(county, "^st ", "saint "),
+    county = str_trim(county),
+    county = case_when(
+      county == "manhattan" ~ "new york",
+      county == "richmond" ~ "richmond",
+      county == "kings" ~ "kings",
+      county == "bronx" ~ "bronx",
+      county == "queens" ~ "queens",
+      TRUE ~ county
+    ),
+    county = tools::toTitleCase(county)
+  )
+```
+
+```{r}
+map_data <- ny_counties |>
+  left_join(viz_tax1, by = c("NAME" = "county"))
+```
+
+
+```{r}
+ggplot(map_data) +
+  geom_sf(aes(fill = tax_liability_of_all_returns_in_thousands), color = "white", size = 0.2) +
+  scale_fill_viridis_c(
+    option = "plasma", 
+    trans = "log",  # Optional: log transform to deal with big range differences,
+    name = "Tax Liability\n($ Thousands)"
+  ) +
+  labs(
+    title = "New York State: Total Tax Liability by County (2014)",
+    subtitle = "Full-Year Residents | Data from NYS Taxation and Finance Dept",
+    caption = "Visualization by David Manguluti"
+  ) +
+  theme_minimal(base_family = "Arial") +
+  theme(
+    plot.title = element_text(size = 16, face = "bold"),
+    legend.position = "right"
+  )
 ```
 

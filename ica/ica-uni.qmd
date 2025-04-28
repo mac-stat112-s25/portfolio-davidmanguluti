@@ -7,6 +7,7 @@ Use this file for practice with the **univariate viz** in-class activity.  Refer
 #Exercise 1
 
 ```{r}
+library(ggplot2)
 hikes <- read.csv("https://mac-stat.github.io/data/high_peaks.csv")
 head(hikes)
 ```
