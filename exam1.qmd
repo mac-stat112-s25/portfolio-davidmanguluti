@@ -1,0 +1,78 @@
+---
+title: "Exam 1"
+editor: visual
+---
+```{r}
+ 
+ library(tidytuesdayR)
+ library(tidyverse)
+ 
+ tuesdata <- tt_load('2020-02-18')
+ fc <- tuesdata$food_consumption
+```
+
+```{r}
+ head(fc)
+ dim(fc)
+ str(fc)
+```
+
+
+
+```{r}
+library(ggplot2)
+library(dplyr)
+
+fc %>%
+  count(country) %>%
+  ggplot(aes(x = reorder(country, n), y = n)) +
+  geom_col(fill = "steelblue") +
+  coord_flip() +
+  labs(title = "Number of Entries per Country",
+       x = "Country",
+       y = "Count") +
+  theme_minimal()
+
+fc %>%
+  count(food_category) %>%
+  ggplot(aes(x = reorder(food_category, n), y = n)) +
+  geom_col(fill = "darkgreen") +
+  coord_flip() +
+  labs(title = "Entries by Food Category",
+       x = "Food Category",
+       y = "Count") +
+  theme_minimal()
+
+ggplot(fc, aes(x = consumption)) +
+  geom_histogram(binwidth = 10, fill = "tomato", color = "white") +
+  labs(title = "Distribution of Food Consumption",
+       x = "Consumption",
+       y = "Frequency") +
+  theme_minimal()
+```
+
+```{r}
+ ggplot(fc, aes(x = country)) +
+   geom_bar()
+
+ ggplot(fc, aes(x = food_category)) +
+   geom_bar()
+
+ ggplot(fc, aes(y = consumption)) +
+   geom_histogram()
+```
+
+Overall food consumption / food category
+*This would be a simple bar chart*
+Overall food consumption / country
+*This would similarly be a simple bar chart*
+
+For answering question 9, I would select a stacked bar chart.
+  This chart would have axes labels, alt text, a caption, a legend, and a title.
+  
+Some further questions I have are
+How does a country’s population size and land area influence its total and per capita food consumption?
+(This invites exploration of both physical size and demographic scale.)
+	2.	What is the relationship between a country’s CO₂ emissions and its patterns of food consumption?
+(This allows for examining whether countries with higher emissions consume more resource-intensive foods.)
+	3.	How do different food categories (e.g., meat, dairy, grains) contribute to CO₂ emissions across countries?
