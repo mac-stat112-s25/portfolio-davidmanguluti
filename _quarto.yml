@@ -34,6 +34,11 @@ book:
       - exam1.qmd
       - exam2.qmd
 
+    - part: "Summary Sheets"
+      chapters:
+      - summary1.qmd
+      - summary2.qmd 
+
     - part: "In-class Activities"
       chapters: 
       - ica/ica-uni.qmd
@@ -61,7 +66,7 @@ format:
 
 execute:
   cache: false
-  freeze: auto
+  freeze: auto 
   echo: false
   warning: false
   error: false

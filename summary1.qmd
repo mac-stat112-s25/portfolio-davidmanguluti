@@ -1,0 +1,13 @@
+---
+title: "Visualisation"
+format: html
+---
+
+You can view or download the summary sheet below:
+
+[Download Visualization Summary (PDF)](https://drive.google.com/file/d/1CJzNAqZUBFPYvTSJ-p88EPRTfDL_rEzd/view?usp=share_link)
+
+<iframe src="../pdfs/summary-visualization.pdf" width="100%" height="600px">
+This browser does not support PDFs. Please download the PDF to view it: 
+<a href="../pdfs/summary-visualization.pdf">Download PDF</a>.
+</iframe>

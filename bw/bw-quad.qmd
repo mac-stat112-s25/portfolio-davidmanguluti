@@ -2,8 +2,6 @@
 title: "Quadvariate Viz"
 ---
 
-Use this file to generate a professional looking **quadvariate** visualization.  The visualization will not perfect the first time but you are expected to improve on it throughout the semester especially after covering advanced topics such as effective viz.
-
 ```{r}
 
 # Load required libraries
@@ -35,11 +33,11 @@ library(tidyverse)
 library(ggrepel)
 ```
 
-#The Trends of Simpsons Episodes
+::: {.callout-note title="The Trends of Simpsons Episodes"}
 
-::: {.callout-note title="This trivariate visualisation shows the relationship between viewership and IMDB ratings as it pertains to the year the episode was released"}
+This trivariate visualisation shows the relationship between viewership and IMDB ratings as it pertains to the year the episode was released
 
-PLACE YOUR SUMMARY IN THIS CALLOUT BOX
+:::
 
 ```{r}
 simpsons_episodes <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/main/data/2025/2025-02-04/simpsons_episodes.csv')

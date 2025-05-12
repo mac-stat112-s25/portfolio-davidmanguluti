@@ -9,6 +9,11 @@ penguins2 <- read_csv('https://raw.githubusercontent.com/rfordatascience/tidytue
 ```
 
 ```{r}
+library(ggplot2)
+library(scales)
 
-
+dark_money_data <- data.frame(
+  Year = c(2006, 2008, 2010, 2012, 2014, 2016, 2018, 2020, 2022),
+  Amount = c(5, 25, 129, 308, 174, 181, 150, 174, 200) # Amounts in millions
+)
 ```

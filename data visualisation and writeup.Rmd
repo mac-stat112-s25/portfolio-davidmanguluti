@@ -1,0 +1,50 @@
+---
+title: "Data Visualisation and Write-Up by David Manguluti"
+output:
+  pdf_document: default
+  html_document: default
+date: "2025-05-06"
+---
+
+```{r setup, include=FALSE, echo=FALSE, warning=FALSE, message=FALSE, error=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+This is an R Markdown document. 
+
+```{r darkmoney, echo=FALSE, warning=FALSE, message=FALSE, error=FALSE}
+
+# Load libraries
+library(tidyverse)
+library(ggplot2)
+library(readr)
+
+# Load your data
+darkmoney <- read_csv("darkmoney.csv")
+```
+
+```{r pressure, echo=FALSE, warning=FALSE, message=FALSE, error=FALSE}
+ggplot(darkmoney, aes(x = Year, y = `Grand Total` / 1e6)) +
+  geom_line(color = "darkred", size = 1.2) +
+  geom_point(color = "darkred", size = 3) +
+  labs(
+    title = "Total Outside Spending by Type (Dark Money), 2014–2024",
+    x = "Election Year",
+    y = "Total Spending (Millions USD)",
+    caption = "Source: OpenSecrets.org Author: David Manguluti"
+  ) +
+ theme(
+    plot.title = element_text(hjust = 0.5)
+  )+
+  theme_minimal()+
+  scale_x_continuous(breaks = darkmoney$Year) +
+  scale_y_continuous(labels = scales::dollar_format(prefix = "$", suffix = "M"))
+```
+
+A Peak Behind The Obvious
+
+This visualization illustrates the dramatic rise in outside spending over the last decade. The data was sourced from OpenSecrets.org that tracks spending by Super PACs, 501(c)(4) social welfare organizations, and other groups that can be considered “dark money” because of their weak or lack of donor disclosure requirements when it comes to their political expenditure.
+
+One of the most striking features is the spike in 2020 (a notable election year) and the even more dramatic increase projected in 2024. Which with hindsight, it is completely unsurprising that the most recent US election had such an increase of dark money. This aligns with my portfolio’s focus on how capital reshapes democratic processes. The exponential growth of untraceable money—particularly through Super PACs and 501(c)(4)s—visually underscores the Hydraulic Theory and Ferguson’s Investment Theory. That there are these incredibly wealthy few whose capital influence allows them to influence and apply pressure in favour of policy goals that favour them, while undermining the general population. 
+
+While the data is reliable and publicly available, it’s important to note the limitations: not all spending may be fully disclosed, and some categories (e.g., 501(c)(6)s) have historically been known to underreport. Nevertheless, the trend is objectively clear: democratic systems are increasingly influenced by actors whose contributions are financially powerful but politically invisible. Is this not the denaturation of democracy? 

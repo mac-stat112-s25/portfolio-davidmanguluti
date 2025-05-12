@@ -2,7 +2,7 @@
 title: "Univariate Viz"
 ---
 
-Use this file to generate a professional looking **univariate** visualization. The visualization will not perfect the first time but you are expected to improve on it throughout the semester especially after covering advanced topics such as effective viz.
+This is a univariate visualisation for news publications across the United States provided by Kaggle. 
 
 ```{r}
 news_orgs <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/main/data/2022/2022-04-05/news_orgs.csv')
@@ -39,14 +39,9 @@ library(tidyverse)
 ```
 
 
-#The Biggest News Publications in America
-::: {.callout-caution title="Goals"}
-The goal of this homework is to practice some basic data exploration and data viz in guided settings.
-:::
+::: {.callout-note title="A Note about the Biggest News Publications in America"}
 
-::: {.callout-note title="This univariate visualisation is aimed at showcasing the cities with the biggest American news publications"}
-
-PLACE YOUR SUMMARY IN THIS CALLOUT BOX
+ This univariate visualisation is aimed at showcasing the cities with the biggest American news publications, practice some basic data exploration and data viz in guided settings.
 
 :::
 

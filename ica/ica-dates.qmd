@@ -136,4 +136,5 @@ wday(today, label = TRUE)
 today < ymd("2024-02-14")
 ```
 
+tinytex::install_tinytex()
 

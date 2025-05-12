@@ -1,7 +1,15 @@
 ---
-title: "solo-project"
+title: "Solo Project"
 editor: visual
 ---
+
+Why This Research Was Chosen
+
+In this solo project, I set out to investigate the distribution of tax liability across New York State counties, focusing on the 2014 fiscal year. I chose this research topic to explore how geography intersects with economic contribution, and to uncover spatial disparities in income-derived taxation across urban and rural populations. New York is one of the most economically diverse states in the U.S.—home to both Wall Street and some of the country’s most economically distressed areas—which made it an ideal case study.
+
+The dataset, sourced from the New York State Department of Taxation and Finance, provides total tax liability figures by county for full-year residents. By combining this tabular dataset with shapefiles of New York counties from the U.S. Census Bureau, I created a choropleth map that visually conveys the relative financial contributions of each county to the state’s overall tax base.
+
+
 ```{r}
 library(tidyverse)
 library(sf)
@@ -18,31 +26,29 @@ library(stringr)
 tax_data <- read_csv("total-income-and-tax-liability-by-place-of-residence-beginning-tax-year-1999.csv") |>
   clean_names()
 
-glimpse(tax_data)
 ```
 ```{r}
 tax_map <- tax_data %>%
   filter(tax_year == 2014) %>%
   select(county, tax_liability_of_all_returns_in_thousands)
 
-# Just checking
-head(tax_map)
 ```
 ```{r}
 ny_counties <- counties(state = "NY", cb = TRUE, year = 2019)
-plot(ny_counties$geometry)
 viz_tax <- tax_data |>
   filter(tax_year == 2014) |>
   select(county, tax_liability_of_all_returns_in_thousands) |>
   mutate(county = tolower(county))
+#|  echo: false
+
 ```
 
 ```{r}
 anti_join(viz_tax, ny_counties, by = c("county" = "NAME")) %>%
   distinct(county)
+
+#|  echo: false
 ```
-
-
 
 
 ```{r}
@@ -92,4 +98,4 @@ ggplot(map_data) +
     legend.position = "right"
   )
 ```
-
+The findings illustrate a striking concentration of tax liability in a few key counties. This spatial inequality in tax liability suggests not only economic stratification, but also important policy implications: counties contributing less may still carry substantial needs for public investment, while high-contribution counties may exert disproportionate influence over state tax policy and resource allocation.

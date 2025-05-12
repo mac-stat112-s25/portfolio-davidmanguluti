@@ -1,11 +1,6 @@
 ---
 title: "Spatial Viz"
 ---
-
-Use this file to generate a professional looking **spatial** visualization.  The visualization will not perfect the first time but you are expected to improve on it throughout the semester especially after covering advanced topics such as effective viz.
-
-Create a data set using the `tribble()` function that has 10-15 rows of your favorite places. The columns will be the name of the location, the latitude, the longitude, and a column that indicates if it is in your top 3 favorite locations or not. For an example of how to use `tribble()`, look at the `favorite_stp` that was created manually below.
-
 ```{r}
 
 # Load required libraries
@@ -55,14 +50,8 @@ fave_yale <- tribble(
 ```
 
 ```{r}
-
-```
-
-
-```{r}
 pal <- colorFactor(palette = c("red", "blue"), domain = fave_yale$favorite)
 ```
-
 
 ```{r}
 #|fig-cap: "Map that showcases in blue and red the best spots on Yale University campus"
